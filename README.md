@@ -9,7 +9,7 @@
     2. 都不命中时，就需要循环查找（源码中用map/{}）
 
 ## study-reactive 分支
-- 学习数据响应式原理
+- 学习数据响应式原理，👉[跳转至分支](https://github.com/theeixc/learn-vue-principle/tree/study-reactive)
   - `observe`、`observer`、`defineReactive` 三者联合实现对象的响应式处理，其中 observe 为递归入口、observer 类把对象变为响应式（设置 getter | setter）、defineReactive 定义响应式（`Object.defineProperty方法`）
   - Dep 类：每个属性都有一个 dep 实例，负责收集依赖（收集 watcher ）
     1. `depend` 让属性的 dep 记住 watcher（dep 会通知 watcher ）、`notify` 通知 watcher 更新
