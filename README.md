@@ -22,3 +22,7 @@
 - `parseTemplateToTokens` 将`templateStr` 转化为 tokens
   1. 内部调用`Scanner`类，用于扫描字符串，内部`scanUtil`方法获取文本，`scan`方法略过 `{{ && }}`
   2. 数组需要单独处理
+  3. 调用`nestTokens`方法折叠 tokens（方法很巧妙，使用了栈结构 + js引用类型）
+- `renderTemplate`使用生成的tokens 和 传入的data，获取 domStr
+  1. 实现`lookup`函数，获取data中的属性值，**处理`{{a.b.c}`，即`['name': 'a.b.c']`此类情况**
+  2. 数组单独处理，`parseArray` 和 `renderTemplate`循环调用
