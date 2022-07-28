@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5_观察tokens</title>
+  </head>
+  <body>
+    <script src="./js/mustache.js"></script>
+
+    <script>
+      let templateStr = `
+            <ul>
+              {{#arr}}
+              <li>{{name}}的爱好：
+                <ol>
+                  {{#hobbies}}
+                  <li>{{.}}</li>  
+                  {{/hobbies}}
+                </ol>  
+              </li>  
+              {{/arr}}
+            </ul>
+          `;
+
+      Mustache.render(templateStr, {});
+    </script>
+  </body>
+</html>

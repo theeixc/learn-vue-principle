@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4_mustache用法</title>
+  </head>
+  <body>
+    <div id="container1"></div>
+    <hr />
+    <div id="container2"></div>
+    <hr />
+    <div id="container3"></div>
+    <hr />
+    <div id="container4"></div>
+    <hr />
+    <div id="container5"></div>
+    <hr />
+    <div id="container6"></div>
+
+    <!-- 引入 mustache  -->
+    <script src="./js/mustache.js"></script>
+
+    <script>
+      /*
+        使用 mustache 模板引擎
+          {{}} 胡子语法
+          {{#data}}  {{/data}} ==> data 循环数组
+
+          Mustache.render(templateStr, data)
+       */
+      // console.log(Mustache);
+      var data = {
+        arr: [
+          { name: "小明", age: 12, sex: "F" },
+          { name: "小宏", age: 11, sex: "M" },
+          { name: "小墙", age: 13, sex: "F" },
+        ],
+      };
+
+      var templateStr = `
+        <ul>
+          {{#arr}}
+          <li>
+            <div class="hd">{{name}}的信息</div>
+            <div class="bd">
+              <p>姓名：{{name}}</p>
+              <p>年纪：{{age}}</p>
+              <p>性别：{{sex}}</p>
+            </div>
+          </li>
+          {{/arr}}
+        </ul>
+      `;
+
+      // 获取的是 dom 字符串
+      let domStr = Mustache.render(templateStr, data);
+      let container = document.getElementById("container1");
+      container.innerHTML = domStr;
+    </script>
+
+    <script>
+      /*
+        不循环：直接使用 {{name}} 读取 name 属性即可
+      */
+      (function () {
+        let dom = document.getElementById("container2");
+
+        let templateStr = `
+          <span>手机型号：{{name}}, 手机价格：{{price}}</span>
+        `;
+
+        let phone = { name: "华为P30", price: 12345 };
+
+        let domStr = Mustache.render(templateStr, phone);
+        dom.innerHTML = domStr;
+      })();
+    </script>
+
+    <script>
+      /*
+      循环简单数组：直接使用 {{.}} 即可获取每一项
+      */
+      (function () {
+        let dom = document.getElementById("container3");
+
+        let templateStr = `
+        <ul>
+          {{#arr}}
+          <li>{{.}}</li>  
+          {{/arr}}
+        </ul>
+      `;
+
+        let data = { arr: ["A", "b", "C"] };
+
+        let domStr = Mustache.render(templateStr, data);
+        dom.innerHTML = domStr;
+      })();
+    </script>
+
+    <script>
+      /*
+      数组嵌套：
+      */
+      (function () {
+        let dom = document.getElementById("container4");
+
+        let templateStr = `
+            <ul>
+              {{#arr}}
+              <li>{{name}}的爱好：
+                <ol>
+                  {{#hobbies}}
+                  <li>{{.}}</li>  
+                  {{/hobbies}}
+                </ol>  
+              </li>  
+              {{/arr}}
+            </ul>
+          `;
+
+        let data = {
+          arr: [
+            { name: "tom", hobbies: ["打代码", "看报纸"] },
+            { name: "andy", hobbies: ["跑步"] },
+          ],
+        };
+
+        let domStr = Mustache.render(templateStr, data);
+        dom.innerHTML = domStr;
+      })();
+    </script>
+
+    <script>
+      /*
+    bollean 值：控制内容的显示与隐藏 v-if 类似
+  */
+      (function () {
+        let dom = document.getElementById("container5");
+
+        let templateStr = `
+        <span>
+          {{#show}}
+            你能看见我吗
+          {{/show}}
+        </span>
+        `;
+        let phone = { show: true };
+
+        let domStr = Mustache.render(templateStr, phone);
+        dom.innerHTML = domStr;
+      })();
+    </script>
+
+    <script type="text/template" id="template">
+      <span>
+        {{#show}}
+          使用的是模板 template
+        {{/show}}
+      </span>
+    </script>
+
+    <script>
+      let container6 = document.getElementById("container6");
+      let template = document.getElementById("template").innerHTML;
+      let obj = { show: true };
+      container6.innerHTML = Mustache.render(template, obj);
+    </script>
+  </body>
+</html>

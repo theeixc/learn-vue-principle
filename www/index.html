@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>index</title>
+    <!-- 配置的虚拟路径 -->
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <script src="/xuni/bundle.js"></script>
+
+    <script>
+      // 1. 简单情况
+      // let templateStr =
+      //   "我买了 {{name}} 手机，花了 {{price}} 钱，我是嵌套对象的属性 {{a.b.c}}!!";
+
+      // 2. 数组且嵌套
+      let templateStr = `
+            <ul>
+              {{#arr}}
+              <li class="bo1 box2" disable="true"  >{{name}}的爱好：
+                <ol>
+                  {{#hobbies}}
+                  <li class="bg">{{.}}</li>
+                  {{/hobbies}}
+                </ol> 
+              </li>
+              {{/arr}}
+            </ul>
+          `;
+
+      // 3. 简单数组
+      /* let templateStr = `
+        <ul>
+          {{#arr}}
+          <li>{{.}}</li>  
+          {{/arr}}
+        </ul>
+      `; */
+      // let data = { name: "华为P30", price: 12345, a: { b: { c: "a的b的c" } } };
+      let data = {
+        arr: [
+          { name: "tom", hobbies: ["打代码", "看报纸"] },
+          { name: "andy", hobbies: ["跑步"] },
+        ],
+      };
+      // let data = { arr: ["A", "b", "C"] };
+      let domStr = TemplateEngine.render(templateStr, data);
+      console.log(domStr);
+      let container = document.getElementById("container");
+      container.innerHTML = domStr;
+    </script>
+  </body>
+</html>
