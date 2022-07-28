@@ -16,3 +16,9 @@
   - watcher类：分为三种（渲染 watcher、计算属性 watcher、侦听器 watcher），此类未手写完全（只实现了 侦听器 watcher）
     1. `addDep` 让 watcher 记住 dep（组件销毁时，需要清空 dep + 计算属性需要使用）
   
+## study-templateEngin 分支
+- 借助 [mustache](https://github.com/janl/mustache.js) 学习模板引擎（将数据转化为视图），👉[跳转至分支](https://github.com/theeixc/learn-vue-principle/tree/study-templateEngin)
+- `TemplateEngine.render()`接收两个参数`templateStr`、`data`，内部调用`parseTemplateToTokens` 和`renderTemplate`
+- `parseTemplateToTokens` 将`templateStr` 转化为 tokens
+  1. 内部调用`Scanner`类，用于扫描字符串，内部`scanUtil`方法获取文本，`scan`方法略过 `{{ && }}`
+  2. 数组需要单独处理
