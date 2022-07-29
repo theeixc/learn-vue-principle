@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width", initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        3[abc] ==> abcabcabc
+        2[1[a]3[c]] ==> acccaccc
+
+
+        1. 两个栈，一个保存数字，一个保存字符
+        2. 遇到 数字[，数字压栈，空字符串入栈（用于保存对应的字符）
+        3. 遇到 字母串]，更新栈顶元素为 字符串
+        4. 遇到 ]，字符串栈出栈、数字栈出栈、repeat后，concat 字符栈顶元素
+      */
+
+      function smartRepeat(str) {
+        // 存放数字的栈
+        const numStack = [];
+        // 存放字符的栈
+        const strStack = [""];
+
+        let idx = 0;
+        let rest = str;
+        while (idx < str.length) {
+          // 剩余为遍历的字符串
+          rest = str.slice(idx);
+
+          // 查看当前 rest 是否已 数字[ 开头
+          if (/^\d+\[/.test(rest)) {
+            let times = +rest.match(/^(\d+)\[/)[1];
+
+            numStack.push(times);
+            strStack.push("");
+
+            idx += times.toString().length + 1;
+          } else if (/^\w+\]/.test(rest)) {
+            // 以 字母] 开头
+            let temp = rest.match(/^(\w+)\]/)[1];
+            strStack[strStack.length - 1] = temp;
+            idx += temp.length;
+          } else if (/^\]/.test(rest)) {
+            // 遇到 ]，数字出栈、字符串出栈，重复后和字符栈顶concat
+            let s = strStack.pop().repeat(numStack.pop());
+            let preStr = strStack.pop();
+            strStack.push(preStr.concat(s));
+            idx++;
+          }
+
+          console.log(numStack, strStack);
+        }
+        return strStack;
+      }
+
+      // debugger;
+      console.log(smartRepeat("3[2[abc]4[d]]"));
+    </script>
+  </body>
+</html>
