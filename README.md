@@ -26,3 +26,11 @@
 - `renderTemplate`使用生成的tokens 和 传入的data，获取 domStr
   1. 实现`lookup`函数，获取data中的属性值，**处理`{{a.b.c}`，即`['name': 'a.b.c']`此类情况**
   2. 数组单独处理，`parseArray` 和 `renderTemplate`循环调用
+
+## study-ast 分支
+- 学习如何将模板字符串变为抽象语法树 ast，👉[跳转至分支](https://github.com/theeixc/learn-vue-principle/tree/study-ast)
+- 思想：使用指针 + 栈
+  * 遍历字符串，书写正则匹配标签的开始、标签内的属性、标签之间的文字、标签的结束等
+  * 两个辅助栈（源码只使用了一个），一个用于保存标签（标识单个标签的开始和结束），一个用于保存结果
+    1. 遇到开始标签，字符栈入栈、内容栈放入新对象（其中包括`tag`、`childre`、`attrs`等）
+    2. 遇到结束标签，字符栈出栈、内容栈出栈、且将出栈元素推入内容栈顶的 `children` 属性中
