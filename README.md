@@ -11,10 +11,11 @@
 ## study-reactive 分支
 - 学习数据响应式原理，👉[跳转至分支](https://github.com/theeixc/learn-vue-principle/tree/study-reactive)
   - `observe`、`observer`、`defineReactive` 三者联合实现对象的响应式处理，其中 observe 为递归入口、observer 类把对象变为响应式（设置 getter | setter）、defineReactive 定义响应式（`Object.defineProperty方法`）
-  - Dep 类：每个属性都有一个 dep 实例，负责收集依赖（收集 watcher ）
+  - Dep 类：**依赖的管理者**。每个observer实例身上都有一个 dep 实例，负责收集依赖（收集 watcher ）
     1. `depend` 让属性的 dep 记住 watcher（dep 会通知 watcher ）、`notify` 通知 watcher 更新
-  - watcher类：分为三种（渲染 watcher、计算属性 watcher、侦听器 watcher），此类未手写完全（只实现了 侦听器 watcher）
-    1. `addDep` 让 watcher 记住 dep（组件销毁时，需要清空 dep + 计算属性需要使用）
+  - watcher类：**依赖，或者说订阅者**。分为三种（渲染 watcher、计算属性 watcher、侦听器 watcher），此类未手写完全（只实现了 侦听器 watcher）
+    1. `addDep` 让 watcher 记住 dep（组件销毁时，需要清空 dep + 计算属性需要使用）、
+    2. 自身有 `update` 方法，通知组件更新视图。
   
 ## study-templateEngin 分支
 - 借助 [mustache](https://github.com/janl/mustache.js) 学习模板引擎（将数据转化为视图），👉[跳转至分支](https://github.com/theeixc/learn-vue-principle/tree/study-templateEngin)
